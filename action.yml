@@ -22,7 +22,7 @@ inputs:
   overwrite:
     description: "If needed to overwrite the parameter: ['overwrite' | 'no-overwrite']"
     required: false
-    default: "no-overwrite"
+    default: "overwrite"
 
   tier:
     description: "Tier of the parameter: "
