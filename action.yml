@@ -1,0 +1,67 @@
+name: "ssm-put-parameter"
+description: "Puts parameter to AWS Parameter Store using AWS CLI"
+inputs:
+  name:
+    description: "Name of the parameter"
+    required: true
+
+  value:
+    description: "Value of the parameter"
+    required: true
+
+  description:
+    description: "Description of the parameter"
+    required: false
+    default: ""
+
+  type:
+    description: "Type of the parameter: [String | SecureString | StringList]"
+    required: false
+    default: "String"
+
+  overwrite:
+    description: "If needed to overwrite the parameter: ['overwrite' | 'no-overwrite']"
+    required: false
+    default: "overwrite"
+
+  tier:
+    description: "Tier of the parameter: "
+    required: false
+    default: "Intelligent-Tiering"
+    
+runs:
+  using: "composite"
+  steps:
+    - name: validate-inputs
+      run: |
+        function validate_parameter() {
+          local parameter_name="$1"
+          local parameter_value="$2"
+          local valid_choices=("$3")
+
+          if [[ ! " ${valid_choices[*]} " =~ " $parameter_value " ]]; then
+            echo "Parameter $parameter_name ['$parameter_value'] is not valid, must be one of (${valid_choices[*]})"
+            exit 1
+          fi
+        }
+        
+        valid_types=(String SecureString StringList)
+        validate_parameter "type" "${{ inputs.type }}" "${valid_types[*]}"
+
+        valid_overwrite=(overwrite no-overwrite)
+        validate_parameter "overwrite" "${{ inputs.overwrite }}" "${valid_overwrite[*]}"
+
+        valid_tiers=(Standard Advanced Intelligent-Tiering)
+        validate_parameter "tier" "${{ inputs.tier }}" "${valid_tiers[*]}"
+      shell: bash
+
+    - name: put-parameter
+      run: |
+        aws ssm put-parameter \
+        --name "${{ inputs.name }}" \
+        --value "${{ inputs.value }}" \
+        --description "${{ inputs.description }}" \
+        --type "${{ inputs.type }}" \
+        --tier "${{ inputs.tier }}" \
+        --${{ inputs.overwrite }}
+      shell: bash
