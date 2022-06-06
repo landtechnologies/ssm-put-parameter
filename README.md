@@ -6,12 +6,12 @@ Composite GitHub action to put parameters to AWS Parameter Store
 ### Parameters
 
 | name | required | possible values | default value |
-|------|----------|-----------------|-----------------|
+|------|----------|-----------------|--------------|
 | name | true | any | none |
 | value | true | any | none |
 | description | false | any | "" |
 | type | false | ["String", "SecureString", "StringList"] | "String" |
-| overwrite | false | ["overwrite", "no-overwrite"] | "no-overwrite" |
+| overwrite | false | ["overwrite", "no-overwrite"] | "overwrite" |
 | tier | false | ["Standard" "Advanced", "Intelligent-Tiering"] | "Standard" |
  
 ### How to use
