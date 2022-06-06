@@ -39,7 +39,7 @@ jobs:
         uses: landtechnologies/ssm-put-parameter@v1
         with:
           # input parameters for the first run
-          name: /risk/contrived/test_string_parameter
+          name: /test/parameter/string
           value: test_string_parameter_value
           description: Test string parameter
           type: String
@@ -51,8 +51,8 @@ jobs:
         uses: landtechnologies/ssm-put-parameter@v1
         with:
           # input parameters for the second run
-          name: /risk/contrived/test_secret_parameter
-          value: ${{ secrets.RISK_CONTRIVED_SECRET_PARAMETER }}
+          name: /test/parameter/encoded
+          value: ${{ secrets.TEST_SECRET_PARAMETER_VALUE }}
           description: Test encoded parameter
           type: SecureString
           overwrite: overwrite
