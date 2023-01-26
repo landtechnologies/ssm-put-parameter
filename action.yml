@@ -59,7 +59,7 @@ runs:
       run: |
         aws ssm put-parameter \
         --name "${{ inputs.name }}" \
-        --value "${{ inputs.value }}" \
+        --value '${{ inputs.value }}' \
         --description "${{ inputs.description }}" \
         --type "${{ inputs.type }}" \
         --tier "${{ inputs.tier }}" \
