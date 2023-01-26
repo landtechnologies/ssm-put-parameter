@@ -58,9 +58,9 @@ runs:
     - name: put-parameter
       run: |
         aws ssm put-parameter \
-        --name "${{ inputs.name }}" \
+        --name '${{ inputs.name }}' \
         --value '${{ inputs.value }}' \
-        --description "${{ inputs.description }}" \
+        --description '${{ inputs.description }}' \
         --type "${{ inputs.type }}" \
         --tier "${{ inputs.tier }}" \
         --${{ inputs.overwrite }}
