@@ -56,11 +56,13 @@ runs:
       shell: bash
 
     - name: put-parameter
+      # note the single quoting (of inputs.value) is especially important for
+      # things like private keys, which may contain `\n`.
       run: |
         aws ssm put-parameter \
-        --name "${{ inputs.name }}" \
-        --value "${{ inputs.value }}" \
-        --description "${{ inputs.description }}" \
+        --name '${{ inputs.name }}' \
+        --value '${{ inputs.value }}' \
+        --description '${{ inputs.description }}' \
         --type "${{ inputs.type }}" \
         --tier "${{ inputs.tier }}" \
         --${{ inputs.overwrite }}
